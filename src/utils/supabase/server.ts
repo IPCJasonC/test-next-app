@@ -1,5 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
-import type { Cookies } from 'next/headers'
+import { cookies } from 'next/headers'
+
+type CookieStore = ReturnType<typeof cookies>
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
@@ -10,7 +12,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
-export function createClient(cookieStore: Cookies) {
+export function createClient(cookieStore: CookieStore) {
   return createServerClient(supabaseUrl, supabaseAnonKey, {
     cookies: {
       getAll: () =>
